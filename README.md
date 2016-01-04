@@ -9,6 +9,17 @@ Before running any script you must create the network and install jq. Jq is used
   - sudo docker network create ltu.miguel.ganglia
   - sudo apt-get install jq
 
+Execute it:
+
+You have to do ( I will make the example with the runNetwork_GANGLIA.sh)
+
+  - sudo runNetwork_GANGLIA.sh
+  - runNetwork_GANGLIA.sh (this command you can use it if your user has been included in the docker group*)
+
+
+* To include your user in the docker group
+    sudo usermod -aG docker myUserName
+
 runNetwork_GANGLIA.sh script creates the network and connects all the containers. 
 
   - 1 gmetad container with gweb
