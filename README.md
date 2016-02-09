@@ -1,4 +1,8 @@
 # course
+This project that will be evolving was motivated by the CloudBerry Project at LTU, in which I participate and wrote a paper with some of the participants
+
+http://www.scitepress.org/DigitalLibrary/PublicationsDetail.aspx?ID=mmpx5QPWYWI=&t=1
+
 This is for the students that are taking the course in LTU
 
 
