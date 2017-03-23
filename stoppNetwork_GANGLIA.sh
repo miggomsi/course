@@ -2,7 +2,7 @@
 
 ########################################################
 #
-# NAME: Monitoring into a Container
+# NAME: CoMa into a Container
 #
 # Description:
 #     Program developed to help the students with their project
@@ -12,11 +12,7 @@
 #
 #######################################################
 
-######### STOP CONTAINERS #################
-#
-# This method stops the containers running, gmond and gmetads
-# arg: number of containers to stop
-#############################################
+
 function stopContainers(){
 
   docker exec gmetadgwebnetwork /home/stop-services-apache-gmetad.sh

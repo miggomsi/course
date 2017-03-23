@@ -1,0 +1,86 @@
+#############################
+#
+#
+#     SCRIPTS
+#
+#
+#############################
+
+
+First you need to give them execution permission. You do this doing
+
+  sudo chmod +x runNetwork_GANGLIA.sh startNetwork_GANGLIA.sh stoppNetwork_GANGLIA.sh destroyNetwork_GANGLIA.sh copyDBGanglia.sh
+
+  To execute a scritp you can do two things (better the second one)
+
+   sudo ./runNetwork_GANGLIA.sh
+
+  Or (if your user is within the docker group)
+
+  ./runNetwork_GANGLIA.sh
+
+  To include a user in the docker group you can do
+
+  sudo usermod -aG docker myUserName
+
+  This will allow you to execute the commands "docker <command>" instead of executing "sudo docker <command>" and introducing the credentials all the time
+
+  If you run some scripts without running others before it will show an error. Don't worry it is because docker has not found any container with that name
+
+    Example: If I run stoppNetwork_GANGLIA.sh without running runNetwork_GANGLIA.sh before it will show that the containers couldn't be able to be stopped because they don't exist
+
+    You only need to run them in the correct order
+
+#################  main.sh {run | destroy} fix    ##########################
+
+  This script takes two arguments:
+
+      {run|destroy}: It runs the infraestructure using the following script. In addtion it deploys a Server where the CoMa container (dockerapi.sh) will perform the requests
+      to destroy the infraestructure you need to give it the destroy input argument.
+
+      fix: Not yet implemented but you still need to give it: It will be used to solve some server problems
+
+      IMPORTANT: If you close the terminal where the server was running at, there will be some problems with the docker engine. You need to remove restart
+      the docker engine doing "sudo service docker restart". Unfortunally this will bring dead containers. This means that the docker engine was not able to
+      unmount the aufs folders of the container. The solution (so far) for this:
+        - Restart the docker engine doing "sudo service docker restart"
+        - Do "umount /var/lib/docker/aufs/mnt/<dockerIDContaienr>".
+        - docker rm  <dockerIDContaienr>
+
+
+#################  runNetwork_GANGLIA.sh    ##########################
+
+This scripts deploys the network from scratch. First it will fetch the images from the Docker hub and might take a while
+when the images have been fetched, they will be available locally.
+
+You can see the containers started doing
+
+docker ps
+
+And all container doing
+
+docker ps -a.
+
+This script will create 2 folders in the same directory:
+  One is called temp where there would be a network with the gmonds created in a file and with the ipaddress where the gweb is available
+  The other is called rrdBack where the copies from the database will be stored ( This can be done running the copyDBGanglia.sh explained after)
+
+#################  destroyNetwork_GANGLIA.sh    ##########################
+
+Destroys all the network and delete the containers. It doesn't delete the docker images nither the copies done into the rrdBack folder. It deletes the net.txt within the temp folder
+because this might change every time you run the network
+
+#################  stoppNetwork_GANGLIA.sh    ##########################
+
+Once the runNetwork_GANGLIA.sh has been running. You can use this script to stop the network. It won't destroy the containers and if you run
+the command "docker ps -a" you will be able to see them listed with the STATE set as Exit
+
+#################  startNEtwork_GANGLIA.sh    ##########################
+
+From a stopped network you can re-launch it again instead of creating it from scratch
+
+#################  copyDBGanglia.sh    ##########################
+
+You run this script doing " ./copyDBGanglia.sh name ". The attribute "name" is the name of the folder where the copy of the current DB will be stored
+
+It copies the DB into the host so you can play arround with it

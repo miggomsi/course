@@ -1,7 +1,7 @@
 #!/bin/bash
 ########################################################
 #
-# NAME: Monitoring into a Container
+# NAME: CoMa into a Container
 #
 # Description:
 #     Program developed to help the students with their project
@@ -19,7 +19,7 @@
 #############################################
 function createHostsFlowContainer(){
 
-docker run -t -d --volume=/proc:/procHost:ro --name hsflowHOSTest miggom/course-hsflow:1.0 /bin/bash
+docker run -t -d --volume=/proc:/procHost:ro --name=hsflowHOSTest --hostname=hsflowHOST miggom/course-hsflow:1.0 /bin/bash
 docker network connect ltu.miguel.ganglia hsflowHOSTest
 docker exec hsflowHOSTest /etc/init.d/hsflowd restart
 
@@ -86,7 +86,7 @@ function createContainers(){
   done
 
   #Creates the gmetad
-  docker run -t -d -p 80 --name=gmetadgwebnetwork --hostname=gmetadgwebnetwork miggom/course-gmetad:1.01 /bin/bash
+  docker run -t -d -p 80 --name=gmetadgwebnetwork --hostname=gmetadgwebnetwork miggom/course-gmetad:1.02 /bin/bash
   docker network connect $NAME_NET gmetadgwebnetwork
   echo "Starting gmetad and gweb"
   docker exec gmetadgwebnetwork home/start-services-apache-gmetad.sh

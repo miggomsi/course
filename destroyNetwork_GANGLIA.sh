@@ -1,7 +1,7 @@
 #!/bin/bash
 ########################################################
 #
-# NAME: Monitoring into a Container
+# NAME: CoMa into a Container
 #
 # Description:
 #     Program developed to help the students with their project
@@ -10,11 +10,7 @@
 # Date: 24-11-2015
 #
 #######################################################
-######### STOP CONTAINERS #################
-#
-# This method stops the containers running
-# arg: number of containers to stop
-#############################################
+
 function stopContainers(){
   stop=$1
   if [ $# = 0 ]
@@ -34,12 +30,6 @@ function stopContainers(){
   docker stop hsflowHOSTest
   echo "done :)"
 }
-######### DESTROY CONTAINERS #################
-#
-# After stopping the number of containers it would be destroyed
-# arg: number of containers to destroy
-#
-#############################################
 function destroyContainers(){
 
   stop=$1
@@ -60,6 +50,11 @@ function destroyContainers(){
   echo "destroying host sflow ..."
   docker rm hsflowHOSTest
   rm ./temp/net.txt
+  if [[ -f ./temp/hsflowd.auto ]]; then
+    #remove hsflowd.auto
+    rm ./temp/hsflowd.auto
+
+  fi
   echo "done :D"
 
 }

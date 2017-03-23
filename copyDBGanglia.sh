@@ -1,7 +1,7 @@
 #!/bin/bash
 ########################################################
 #
-# NAME: Monitoring into a Container 
+# NAME: CoMa into a Container
 #
 # Description:
 #     Program developed to help the students with their project
